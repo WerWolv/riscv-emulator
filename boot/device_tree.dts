@@ -1,0 +1,60 @@
+/dts-v1/;
+
+/ {
+  #address-cells = <0x01>;
+  #size-cells = <0x01>;
+  model = "WerWolv's Emulator";
+
+  cpus {
+    #address-cells = <0x01>;
+    #size-cells = <0x00>;
+    timebase-frequency = <65000000>;
+
+    cpu@0 {
+      device_type = "cpu";
+      compatible = "riscv";
+      reg = <0x00>;
+      riscv,isa = "rv32ima";
+      mmu-type = "riscv,sv32";
+
+      interrupt_controller: interrupt-controller {
+        #interrupt-cells = <0x01>;
+        #address-cells = <0x00>;
+        interrupt-controller;
+        compatible = "riscv,cpu-intc";
+      };
+    };
+  };
+
+  soc@F0000000 {
+    #address-cells = <0x01>;
+    #size-cells = <0x01>;
+    compatible = "simple-bus";
+    ranges = <0x00 0xF0000000 0x10000000>;
+
+    serial@4000000 {
+      compatible = "ns8250", "ns16550";
+      reg = <0x4000000 0x100000>;
+      interrupt-parent = <&interrupt_controller>;
+      interrupts = <0x01>;
+      no-loopback-test;
+      clock-frequency = <5000000>;
+    };
+  };
+
+  aliases {
+    serial0 = "/soc@F0000000/serial@4000000";
+  };
+
+  chosen {
+    bootargs = "earlycon console=/dev/ttyS0 rdinit=/bin/init root=/dev/initrd";
+    stdout-path = "serial0";
+    linux,initrd-start = <0x1f700000>;
+    linux,initrd-end = <0x1fefffff>;
+  };
+
+  memory@0 {
+    device_type = "memory";
+    reg = <0x00 (512 * 1024 * 1024)>;
+  };
+};

@@ -1,0 +1,6 @@
+/cmake-build-*
+/boot/Image
+/boot/init
+/boot/device_tree.dtb
+/boot/initramfs.cpio
+/.idea

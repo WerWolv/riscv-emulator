@@ -1,0 +1,52 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 28,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "base",
+      "hidden": true,
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
+    },
+    {
+      "name": "emscripten-debug",
+      "displayName": "Emscripten Debug",
+      "description": "Configure with Emscripten toolchain (Debug)",
+      "inherits": "base",
+      "binaryDir": "${sourceDir}/cmake-build-emscripten-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_TOOLCHAIN_FILE": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+      }
+    },
+    {
+      "name": "emscripten-release",
+      "displayName": "Emscripten Release",
+      "description": "Configure with Emscripten toolchain (Release)",
+      "inherits": "base",
+      "binaryDir": "${sourceDir}/cmake-build-emscripten-release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_TOOLCHAIN_FILE": "$env{EMSDK}/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "build-emscripten-debug",
+      "displayName": "Build Emscripten Debug",
+      "configurePreset": "emscripten-debug"
+    },
+    {
+      "name": "build-emscripten-release",
+      "displayName": "Build Emscripten Release",
+      "configurePreset": "emscripten-release"
+    }
+  ]
+}
