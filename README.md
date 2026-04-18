@@ -1,6 +1,6 @@
 # RISC-V Emulator and Linux System from Scratch
 
-This repo contains all the source code required to follow the blog post at https://werwolv.net/posts/linux_in_my_browser
+This repo contains all the source code required to follow the blog post at https://werwolv.net/posts/linux_bringup/
 
 ## Source Code
 - `/lib` contains the entire rv32ima instruction set emulator code as well as a minimal set of emulated devices
